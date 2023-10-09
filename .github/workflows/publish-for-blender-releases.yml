@@ -21,7 +21,7 @@ jobs:
     steps:
     - name: Download Build
       run: |
-        curl https://raw.githubusercontent.com/mysticfall/bpystubgen/main/package/download_blender.sh \
+        curl https://raw.githubusercontent.com/brgr/bpystubgen/main/package/download_blender.sh \
           -o download_blender.sh && \
         bash download_blender.sh "${{matrix.blender_version}}" releases
 
