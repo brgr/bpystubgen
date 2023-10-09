@@ -19,7 +19,7 @@ declare -A BLENDER_BINARY_URL=(
     ["v3.10"]="https://download.blender.org/release/Blender3.1/blender-3.1.0-linux-x64.tar.xz"
     ["v3.11"]="https://download.blender.org/release/Blender3.1/blender-3.1.1-linux-x64.tar.xz"
     ["v3.12"]="https://download.blender.org/release/Blender3.1/blender-3.1.2-linux-x64.tar.xz"
-    ["v3.6.4"]="https://www.blender.org/download/release/Blender3.6/blender-3.6.4-linux-x64.tar.xz/"
+    ["v3.6.4"]="https://www.blender.org/download/release/Blender3.6/blender-3.6.4-linux-x64.tar.xz"
 )
 
 declare -A BLENDER_SOURCE_URL=(
