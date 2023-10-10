@@ -4,7 +4,7 @@
 # Usage: bash download_blender.sh 2.93 out
 set -eEu
 
-SUPPORTED_VERSIONS=("2.80" "2.81" "2.82" "2.83" "2.90" "2.91" "2.92" "2.93" "3.00" "3.10" "3.11" "3.12" "3.6.4")
+SUPPORTED_VERSIONS=("2.80" "2.81" "2.82" "2.83" "2.90" "2.91" "2.92" "2.93" "3.00" "3.10" "3.11" "3.12" "3.64")
 
 declare -A BLENDER_BINARY_URL=(
     ["v2.80"]="https://download.blender.org/release/Blender2.80/blender-2.80-linux-glibc217-x86_64.tar.bz2"
@@ -19,7 +19,7 @@ declare -A BLENDER_BINARY_URL=(
     ["v3.10"]="https://download.blender.org/release/Blender3.1/blender-3.1.0-linux-x64.tar.xz"
     ["v3.11"]="https://download.blender.org/release/Blender3.1/blender-3.1.1-linux-x64.tar.xz"
     ["v3.12"]="https://download.blender.org/release/Blender3.1/blender-3.1.2-linux-x64.tar.xz"
-    ["v3.6.4"]="https://download.blender.org/release/Blender3.6/blender-3.6.4-linux-x64.tar.xz"
+    ["v3.64"]="https://download.blender.org/release/Blender3.6/blender-3.6.4-linux-x64.tar.xz"
 )
 
 declare -A BLENDER_SOURCE_URL=(
@@ -35,7 +35,7 @@ declare -A BLENDER_SOURCE_URL=(
     ["v3.10"]="https://download.blender.org/source/blender-3.1.0.tar.xz"
     ["v3.11"]="https://download.blender.org/source/blender-3.1.1.tar.xz"
     ["v3.12"]="https://download.blender.org/source/blender-3.1.2.tar.xz"
-    ["v3.6.4"]="https://download.blender.org/source/blender-3.6.4.tar.xz"
+    ["v3.64"]="https://download.blender.org/source/blender-3.6.4.tar.xz"
 )
 
 function get_extractor() {
