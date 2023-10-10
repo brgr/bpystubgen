@@ -46,12 +46,12 @@ jobs:
         sudo sh -c "echo '$pythonLocation/lib' >> /etc/ld.so.conf.d/python.conf" && \
         sudo ldconfig
 
-    - name: Patch Blender Source
-      if: ${{ !startsWith(matrix.blender_version, '2.8') }}
-      working-directory: releases/v${{matrix.blender_version}}/src
-      run: |
-        sed -i -e "/Hair/s/^/#/" doc/python_api/sphinx_doc_gen.py && \
-        sed -i -e "/PointCloud/s/^/#/" doc/python_api/sphinx_doc_gen.py
+    # - name: Patch Blender Source
+    #   if: ${{ !startsWith(matrix.blender_version, '2.8') }}
+    #   working-directory: releases/v${{matrix.blender_version}}/src
+    #   run: |
+    #     sed -i -e "/Hair/s/^/#/" doc/python_api/sphinx_doc_gen.py && \
+    #     sed -i -e "/PointCloud/s/^/#/" doc/python_api/sphinx_doc_gen.py
 
     - name: Prepare API Documentation
       working-directory: releases/v${{matrix.blender_version}}/bin
