@@ -1,4 +1,4 @@
-name: publish-for-blender-releases
+name: build-for-blender-releases
 
 on:
   release:
@@ -76,3 +76,60 @@ jobs:
         name: apidocs-v${{matrix.blender_version}}
         path: apidocs-v${{matrix.blender_version}}.tar.gz
         retention-days: 3
+
+
+  build_stubs:
+    name: Build API Stubs
+    runs-on: ubuntu-latest
+    needs: [build_apis]
+    strategy:
+      fail-fast: false
+      matrix:
+        blender_version:
+          ["3.64"]
+    
+    steps:
+    - name: Download Documents
+      if: ${{ !env.ACT }}
+      uses: actions/download-artifact@v2
+      with:
+        name: apidocs-v${{matrix.blender_version}}
+
+    - name: Extract Documents
+      if: ${{ !env.ACT }}
+      run: tar zxvf apidocs-v${{matrix.blender_version}}.tar.gz
+
+    - name: Install Python
+      uses: actions/setup-python@v2.3.1
+      with:
+        python-version: "${{env.PYTHON_VERSION}}"
+
+    - name: Install Python Dependencies
+      run: |
+        curl https://bootstrap.pypa.io/get-pip.py | python && \
+        python -m pip install bpystubgen
+
+    - name: Build API Stubs
+      working-directory: releases/v${{matrix.blender_version}}
+      run: |
+        python -m bpystubgen --quiet api/sphinx-in blender-stub && \
+        curl https://raw.githubusercontent.com/mysticfall/bpystubgen/main/package/setup.py -o blender-stub/setup.py && \
+        curl https://raw.githubusercontent.com/mysticfall/bpystubgen/main/package/README.md -o blender-stub/README.md
+
+    - name: Build Python Package
+      working-directory: releases/v${{matrix.blender_version}}/blender-stub
+      run: |
+        sed -i "s/#APP_NAME#/blender/g" setup.py && \
+        sed -i "s/#APP_VERSION#/${{matrix.blender_version}}/g" setup.py && \
+        python setup.py sdist
+  
+    - name: Archive Python Package
+      if: ${{ !env.ACT }}
+      run: tar zcvf blender-stubs-v${{matrix.blender_version}}.tar.gz releases/v${{matrix.blender_version}}/blender-stub
+    
+    - name: Upload Python Package to Artifacts
+      if: ${{ !env.ACT }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: blender-stubs-v${{matrix.blender_version}}
+        path: blender-stubs-v${{matrix.blender_version}}.tar.gz
